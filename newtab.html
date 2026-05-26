@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <script>
+    // Apply stored theme before first paint to prevent flash
+    try {
+      const t = localStorage.getItem('bh-theme');
+      if (t === 'dark' || t === 'light') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div id="search-wrap">
+        <span id="search-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <input
+          id="search"
+          type="text"
+          placeholder="Search bookmarks…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search bookmarks"
+        >
+        <button id="search-clear" aria-label="Clear search" hidden>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <!-- auto/sun-with-beams icon -->
+        <svg id="icon-auto" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <!-- light icon -->
+        <svg id="icon-light" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" hidden>
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <!-- dark icon -->
+        <svg id="icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" hidden>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </button>
+    </header>
+
+    <main id="grid-wrap">
+      <div id="grid" role="list"></div>
+      <p id="empty-state" hidden>No bookmarks yet. Add some in Chrome to see them here.</p>
+    </main>
+  </div>
+
+  <!-- Folder overlay -->
+  <div id="folder-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div id="overlay-backdrop"></div>
+    <div id="overlay-panel">
+      <div id="overlay-header">
+        <h2 id="overlay-title"></h2>
+        <button id="overlay-close" aria-label="Close folder">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M1 1l11 11M12 1L1 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div id="overlay-grid" role="list"></div>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
